@@ -1,12 +1,37 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <h1>Welcome to Your Vue.js App</h1>
+  <div class="home container-fluid">
+    <div class="row align-content-center">
+      <img class="col" alt="Vue logo" src="../assets/logo.png" />
+    </div>
+    <div class="row text-center">
+      <div class="col-12">
+        <h1 class="title">
+          <u>NewBrew</u>
+        </h1>
+      </div>
+    </div>
+    <div class="row align-content-center" v-if="$auth.isAuthenticated">
+      <search-bar />
+    </div>
+    <div class="row align-content-center">
+      <posts />
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: "home"
+  // components: {
+  //   SearchBar,
+  //   Posts
+  // }
 };
 </script>
+
+<style scoped>
+.title {
+  color: rgb(136, 96, 21);
+  font-family: "Comfortaa";
+}
+</style>
