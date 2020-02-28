@@ -10,22 +10,18 @@
         </h1>
       </div>
     </div>
-    <div class="row align-content-center" v-if="$auth.isAuthenticated">
-      <search-bar />
-    </div>
-    <div class="row align-content-center">
-      <posts />
-    </div>
+    <posts />
   </div>
 </template>
 
 <script>
+import posts from "@/components/posts";
+
 export default {
-  name: "home"
-  // components: {
-  //   SearchBar,
-  //   Posts
-  // }
+  name: "home",
+  components: {
+    posts
+  }
 };
 </script>
 
