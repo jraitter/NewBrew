@@ -34,4 +34,7 @@ export default {
   color: rgb(136, 96, 21);
   font-family: "Comfortaa";
 }
+img {
+  border-radius: 50%;
+}
 </style>
