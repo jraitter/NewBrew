@@ -1,11 +1,11 @@
 import express from "express";
 import BaseController from "../utils/BaseController";
-import { valuesService } from "../services/ValuesService";
+import { postService } from "../services/PostService";
 import auth0Provider from "@bcwdev/auth0Provider";
 
-export class ValuesController extends BaseController {
+export class PostsController extends BaseController {
   constructor() {
-    super("api/values");
+    super("api/posts");
     this.router = express
       .Router()
       .get("", this.getAll)
@@ -15,7 +15,8 @@ export class ValuesController extends BaseController {
   }
   async getAll(req, res, next) {
     try {
-      return res.send(["value1", "value2"]);
+      let posts = await postService.findAll();
+      return res.send(posts);
     } catch (error) {
       next(error);
     }
@@ -23,7 +24,7 @@ export class ValuesController extends BaseController {
   async create(req, res, next) {
     try {
       // NOTE NEVER TRUST THE CLIENT TO ADD THE CREATOR ID
-      req.body.creator = req.user.email;
+      req.body.email = req.user.email;
       res.send(req.body);
     } catch (error) {
       next(error);

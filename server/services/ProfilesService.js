@@ -35,6 +35,7 @@ async function mergeSubsIfNeeded(profile, user) {
  */
 function sanitizeBody(body) {
   let writable = {
+    //NOTE making this match our schema
     name: body.name,
     picture: body.picture
   };

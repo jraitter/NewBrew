@@ -1,16 +1,16 @@
 import { dbContext } from "../db/DbContext";
 import { BadRequest } from "../utils/Errors";
 
-class ValuesService {
+class PostService {
   async findAll(query = {}) {
-    let values = await dbContext.Values.find(query).populate(
+    let post = await dbContext.Post.find(query).populate(
       "creator",
       "name picture"
     );
-    return values;
+    return post;
   }
   async findById(id) {
-    let value = await dbContext.Values.findById(id);
+    let value = await dbContext.Post.findById(id);
     if (!value) {
       throw new BadRequest("Invalid Id");
     }
@@ -18,4 +18,4 @@ class ValuesService {
   }
 }
 
-export const valuesService = new ValuesService();
+export const postService = new PostService();
