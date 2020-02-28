@@ -5,7 +5,7 @@ import { profilesService } from "../services/ProfilesService";
 
 export class ProfilesController extends BaseController {
   constructor() {
-    super("api/profile");
+    super("api/profiles");
     this.router = express
       .Router()
       .use(auth0Provider.getAuthorizedUserInfo)
