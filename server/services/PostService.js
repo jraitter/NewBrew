@@ -10,29 +10,36 @@ class PostService {
     return post;
   }
   async findById(id) {
-    let value = await dbContext.Post.findById(id);
-    if (!value) {
+    let post = await dbContext.Post.findById(id);
+    if (!post) {
       throw new BadRequest("Invalid Id");
     }
-    return value;
+    return post;
+  }
+  async getPostsByEmail(email) {
+    let posts = await dbContext.Post.find({ creatorEmail: email })
+    if (!posts) {
+      throw new BadRequest("Invalid email");
+    }
+    return posts;
   }
   async create(body) {
     return await dbContext.Post.create(body)
   }
   async edit(id, update, email) {
     let post = await dbContext.Post.findById(id);
-    if (post.creator != email) {
+    if (post.creatorEmail != email) {
       throw new UnAuthorized();
     }
     // @ts-ignore
-    joke.body = update.body;
+    post.body = update.body;
     await post.save();
     return post;
   }
 
   async delete(id, email) {
     let post = await dbContext.Post.findById(id);
-    if (post.creator != email) {
+    if (post.creatorEmail != email) {
       throw new UnAuthorized();
     }
     await dbContext.Post.findByIdAndDelete(post.id);

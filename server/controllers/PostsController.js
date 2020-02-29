@@ -3,6 +3,7 @@ import BaseController from "../utils/BaseController";
 import { postService } from "../services/PostService";
 import auth0Provider from "@bcwdev/auth0Provider";
 
+
 export class PostsController extends BaseController {
   constructor() {
     super("api/posts");
@@ -11,7 +12,11 @@ export class PostsController extends BaseController {
       .get("", this.getAll)
       // NOTE: Beyond this point all routes require Authorization tokens (the user must be logged in)
       .use(auth0Provider.getAuthorizedUserInfo)
-      .post("", this.create);
+      .get("/:id", this.getById)
+      .get("/email/:creatorEmail", this.getPostsByEmail)
+      .put("/:id", this.edit)
+      .post("", this.create)
+      .delete("/:id", this.delete);
   }
   async getAll(req, res, next) {
     try {
@@ -27,6 +32,25 @@ export class PostsController extends BaseController {
       req.body.creatorEmail = req.userInfo.email;
       let post = await postService.create(req.body);
       res.send(req.body);
+    } catch (error) {
+      next(error);
+    }
+  }
+  async getById(req, res, next) {
+    try {
+      // NOTE NEVER TRUST THE CLIENT TO ADD THE CREATOR ID
+      let post = await postService.findById(req.params.id);
+      res.send(post);
+    } catch (error) {
+      next(error);
+    }
+  }
+  async getPostsByEmail(req, res, next) {
+    try {
+      // NOTE NEVER TRUST THE CLIENT TO ADD THE CREATOR ID
+      req.body.creatorEmail = req.userInfo.email;
+      let posts = await postService.getPostsByEmail(req.body.creatorEmail);
+      res.send(posts);
     } catch (error) {
       next(error);
     }
