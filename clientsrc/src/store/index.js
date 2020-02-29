@@ -110,11 +110,11 @@ export default new Vuex.Store({
       dispatch("getPostsByCreatorEmail", post.email)
     },
     async editPostUpCount({ commit, dispatch }, update) {
-      let res = await api.put(("posts/" + update.id), update.upCount)
+      let res = await api.put(("posts/" + update.id), update)
       dispatch("getCommentsByPostId", update.id)
     },
     async editPostDownCount({ commit, dispatch }, update) {
-      let res = await api.put(("posts/" + update.id), update.downCount)
+      let res = await api.put(("posts/" + update.id), update)
       dispatch("getCommentsByPostId", update.id)
     },
     async deletePost({ commit, dispatch }, id) {
