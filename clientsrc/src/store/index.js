@@ -64,8 +64,13 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
-    async getCommentsByPostId({ commit, dispatch }) {
-
+    async getCommentsByPostId({ commit, dispatch }, id) {
+      try {
+        let res = await api.get("posts/" + id + "/comments");
+        commit("setComments", res.data);
+      } catch (e) {
+        console.error(e)
+      }
     },
     async getPostsByCreatorEmail({ commit, dispatch }, email) {
       try {
@@ -83,11 +88,46 @@ export default new Vuex.Store({
         console.error(e);
       }
     },
-    async editPostBody({ commit, dispatch }) {
-
+    async getPostById({ commit, dispatch }, id) {
+      try {
+        let res = await api.get("posts/" + id);
+        commit("setActivePost", res.data)
+      } catch (e) {
+        console.error(e);
+      }
     },
-    async deletePost({ commit, dispatch }) {
-
+    setActivePost({ commit }, post) {
+      commit("setActivePost", post)
+    },
+    async createComment({ commit, dispatch }, comment) {
+      console.log(comment)
+      let res = await api.post("comments", comment)
+      dispatch("getCommentsByPostId", comment.postId)
+    },
+    async createPost({ commit, dispatch }, post) {
+      console.log(post)
+      let res = await api.post("posts", post)
+      dispatch("getPostsByCreatorEmail", post.email)
+    },
+    async editPostUpCount({ commit, dispatch }, update) {
+      let res = await api.put(("posts/" + update.id), update.upCount)
+      dispatch("getCommentsByPostId", update.id)
+    },
+    async editPostDownCount({ commit, dispatch }, update) {
+      let res = await api.put(("posts/" + update.id), update.downCount)
+      dispatch("getCommentsByPostId", update.id)
+    },
+    async deletePost({ commit, dispatch }, id) {
+      try {
+        let res = await api.delete("posts/" + id);
+        commit("deletePost", id)
+        commit("setActivePost", {})
+        router.push({
+          name: "Home"
+        })
+      } catch (error) {
+        console.error(error)
+      }
     },
     async deleteComment({ commit, dispatch }) {
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="comment container-fluid">
+  <div class="comments container-fluid">
     <comment v-for="(commentObj) in comments" :key="commentObj._id" :commentData="commentObj" />
   </div>
 </template>
@@ -14,7 +14,12 @@ export default {
   },
   methods: {
     getComments() {
-      this.$store.dispatch("getCommentsByPostId", this.$route.params._id);
+      this.$store.dispatch("getCommentsByPostId", this.$route.params.postId);
+    }
+  },
+  computed: {
+    comments() {
+      return this.$store.state.comments;
     }
   },
   components: {

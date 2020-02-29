@@ -14,8 +14,7 @@
 <script>
 export default {
   name: "comment",
-  props: ["commentData"],
-  methods: {}
+  props: ["commentData"]
 };
 </script>
 
