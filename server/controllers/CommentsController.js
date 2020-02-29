@@ -5,25 +5,24 @@ import { commentService } from "../services/CommentService";
 import auth0Provider from "@bcwdev/auth0Provider";
 
 
-export class PostsController extends BaseController {
+export class CommentsController extends BaseController {
   constructor() {
-    super("api/posts");
+    super("api/comments");
     this.router = express
       .Router()
       .get("", this.getAll)
       // NOTE: Beyond this point all routes require Authorization tokens (the user must be logged in)
       .use(auth0Provider.getAuthorizedUserInfo)
-      .get("/:id/comments", this.getCommentsByPostId)
       .get("/:id", this.getById)
-      .get("/email/:creatorEmail", this.getPostsByEmail)
+      .get("/email/:creatorEmail", this.getCommentsByEmail)
       .put("/:id", this.edit)
       .post("", this.create)
       .delete("/:id", this.delete);
   }
   async getAll(req, res, next) {
     try {
-      let posts = await postService.findAll();
-      return res.send(posts);
+      let comments = await commentService.findAll();
+      return res.send(comments);
     } catch (error) {
       next(error);
     }
@@ -32,7 +31,7 @@ export class PostsController extends BaseController {
     try {
       // NOTE NEVER TRUST THE CLIENT TO ADD THE CREATOR ID
       req.body.creatorEmail = req.userInfo.email;
-      let post = await postService.create(req.body);
+      let comment = await commentService.create(req.body);
       res.send(req.body);
     } catch (error) {
       next(error);
@@ -41,27 +40,19 @@ export class PostsController extends BaseController {
   async getById(req, res, next) {
     try {
       // NOTE NEVER TRUST THE CLIENT TO ADD THE CREATOR ID
-      let post = await postService.findById(req.params.id);
-      res.send(post);
-    } catch (error) {
-      next(error);
-    }
-  }
-  async getCommentsByPostId(req, res, next) {
-    try {
-      // NOTE NEVER TRUST THE CLIENT TO ADD THE CREATOR ID
-      let comment = await commentService.getCommentsByPostId(req.params.id, req.userInfo.email);
+      let comment = await commentService.findById(req.params.id);
       res.send(comment);
     } catch (error) {
       next(error);
     }
   }
-  async getPostsByEmail(req, res, next) {
+
+  async getCommentsByEmail(req, res, next) {
     try {
       // NOTE NEVER TRUST THE CLIENT TO ADD THE CREATOR ID
       req.body.creatorEmail = req.userInfo.email;
-      let posts = await postService.getPostsByEmail(req.body.creatorEmail);
-      res.send(posts);
+      let comments = await commentService.getCommentsByEmail(req.body.creatorEmail);
+      res.send(comments);
     } catch (error) {
       next(error);
     }
@@ -69,12 +60,12 @@ export class PostsController extends BaseController {
   async edit(req, res, next) {
     try {
       // NOTE NEVER TRUST THE CLIENT TO ADD THE CREATOR ID
-      let post = await postService.edit(
+      let comment = await commentService.edit(
         req.params.id,
         req.body,
         req.userInfo.email
       );
-      res.send(post);
+      res.send(comment);
     } catch (error) {
       next(error);
     }
@@ -82,7 +73,7 @@ export class PostsController extends BaseController {
   async delete(req, res, next) {
     try {
       // NOTE NEVER TRUST THE CLIENT TO ADD THE CREATOR ID
-      await postService.delete(req.params.id, req.userInfo.email);
+      await commentService.delete(req.params.id, req.userInfo.email);
       res.send("deleted");
     } catch (error) {
       next(error);
