@@ -117,6 +117,10 @@ export default new Vuex.Store({
       let res = await api.put(("posts/" + update.id), update)
       dispatch("getCommentsByPostId", update.id)
     },
+    async editPostBody({ commit, dispatch }, update) {
+      let res = await api.put(("posts/" + update.id), update)
+      dispatch("getCommentsByPostId", update.id)
+    },
     async deletePost({ commit, dispatch }, id) {
       try {
         let res = await api.delete("posts/" + id);
