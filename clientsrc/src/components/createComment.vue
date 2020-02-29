@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     createComment() {
-      //TODO create the comment and dispatch to store
+      this.$store.dispatch("createComment", this.newComment);
     }
   }
 };
