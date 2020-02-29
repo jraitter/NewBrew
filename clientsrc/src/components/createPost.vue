@@ -26,7 +26,9 @@ export default {
   name: "createPost",
   data() {
     return {
-      newPost: {}
+      newPost: {
+        email: this.$route.params.creatorEmail
+      }
     };
   },
   methods: {

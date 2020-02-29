@@ -12,9 +12,9 @@ export class PostsController extends BaseController {
       .Router()
       .get("", this.getAll)
       // NOTE: Beyond this point all routes require Authorization tokens (the user must be logged in)
-      .use(auth0Provider.getAuthorizedUserInfo)
       .get("/:id/comments", this.getCommentsByPostId)
       .get("/:id", this.getById)
+      .use(auth0Provider.getAuthorizedUserInfo)
       .get("/email/:creatorEmail", this.getPostsByEmail)
       .put("/:id", this.edit)
       .post("", this.create)
@@ -50,7 +50,7 @@ export class PostsController extends BaseController {
   async getCommentsByPostId(req, res, next) {
     try {
       // NOTE NEVER TRUST THE CLIENT TO ADD THE CREATOR ID
-      let comment = await commentService.getCommentsByPostId(req.params.id, req.userInfo.email);
+      let comment = await commentService.getCommentsByPostId(req.params.id);
       res.send(comment);
     } catch (error) {
       next(error);

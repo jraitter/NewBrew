@@ -19,7 +19,7 @@ class CommentService {
     // if (comments.creatorEmail != email) {
     //   throw new UnAuthorized();
     // }
-    return await comments;
+    return comments;
   }
   async getCommentsByEmail(email) {
     let comments = await dbContext.Comment.find({ creatorEmail: email })

@@ -2,7 +2,13 @@
   <div class="container-fluid">
     <div class="row">
       <div class="card post" style="width: 100vw">
-        <div class="card-header">{{details.title}}</div>
+        <div class="card-header">
+          <div class="row">
+            <div class="col-8 h3">{{details.title}}</div>
+            <div class="col-2">+{{details.upCount}}</div>
+            <div class="col-2">-{{details.downCount}}</div>
+          </div>
+        </div>
         <div class="card-body">
           <blockquote class="blockquote mb-0">
             <p>{{details.body}}</p>
@@ -29,13 +35,17 @@
       <div class="col-3 m-0 p-1">
         <!-- TODO  v if this is the
         users post-->
-        <button class="btn btn-block btn-danger">Delete</button>
+        <button
+          v-show="details.creatorEmail==profile.email"
+          @click="deletePost"
+          class="btn btn-block btn-danger"
+        >Delete</button>
       </div>
       <div class="col-3 m-0 p-1">
-        <button class="btn btn-block btn-success">Like</button>
+        <button v-if="allowVote" @click="upCount" class="btn btn-block btn-success">Like</button>
       </div>
       <div class="col-3 m-0 p-1">
-        <button class="btn btn-block btn-warning">Dislike</button>
+        <button v-if="allowVote" @click="downCount" class="btn btn-block btn-warning">Dislike</button>
       </div>
     </div>
     <div class="row">
@@ -60,17 +70,36 @@ export default {
         "setActivePost",
         this.$store.state.posts.find(p => p._id == this.$route.params.postId)
       );
+      this.$store.dispatch("getCommentsByPostId", this.$route.params.postId);
     }
-    this.$store.dispatch("getCommentsByPostId", this.$route.params.postId);
+  },
+  methods: {
+    upCount() {
+      this.details.upCount++;
+      this.$store.dispatch("editPostUpCount", this.details);
+      this.allowVote = false;
+    },
+    downCount() {
+      this.details.downCount--;
+      this.$store.dispatch("editPostDownCount", this.details);
+      this.allowVote = false;
+    },
+    deletePost() {
+      this.$store.dispatch("deletePost", this.$route.params.postId);
+    }
   },
   data() {
     return {
-      commentForm: false
+      commentForm: false,
+      allowVote: true
     };
   },
   computed: {
     details() {
       return this.$store.state.activePost;
+    },
+    profile() {
+      return this.$store.state.profile;
     }
   },
   components: {

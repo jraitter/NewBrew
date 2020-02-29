@@ -27,7 +27,9 @@ export default {
   name: "createComment",
   data() {
     return {
-      newComment: {}
+      newComment: {
+        postId: this.$route.params.postId
+      }
     };
   },
   methods: {
