@@ -12,7 +12,7 @@
         <div class="card-body border border-dark">
           <blockquote class="blockquote mb-0">
             <p>{{details.body}}</p>
-            <footer class="blockquote-footer">{{details.creatorEmail}}</footer>
+            <footer class="blockquote-footer float-right">{{details.creatorEmail}}</footer>
           </blockquote>
         </div>
       </div>
@@ -50,6 +50,9 @@
     </div>
     <div class="row">
       <create-comment v-if="commentForm" />
+    </div>
+    <div class="row">
+      <h3 class="ml-2">Comments for this post:</h3>
     </div>
     <comments />
   </div>
