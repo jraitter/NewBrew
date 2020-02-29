@@ -64,8 +64,13 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
-    async getCommentsByPostId({ commit, dispatch }) {
-
+    async getCommentsByPostId({ commit, dispatch }, id) {
+      try {
+        let res = await api.get("posts/" + id + "/comments");
+        commit("setComments", res.data);
+      } catch (e) {
+        console.error(e)
+      }
     },
     async getPostsByCreatorEmail({ commit, dispatch }, email) {
       try {
@@ -82,6 +87,17 @@ export default new Vuex.Store({
       } catch (e) {
         console.error(e);
       }
+    },
+    async getPostById({ commit, dispatch }, id) {
+      try {
+        let res = await api.get("posts/" + id);
+        commit("setActivePost", res.data)
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    setActivePost({ commit }, post) {
+      commit("setActivePost", post)
     },
     async editPostBody({ commit, dispatch }) {
 
