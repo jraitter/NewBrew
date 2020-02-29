@@ -10,10 +10,19 @@
           </div>
         </div>
         <div class="card-body border border-dark">
+          <form v-if="editing" @submit="editPostBody">
+            <input type="text" name="postBody" v-model="PostToEdit.body" />
+            <button class="btn btn-info" type="submit">Save</button>
+          </form>
           <blockquote class="blockquote mb-0">
-            <p>{{details.body}}</p>
+            <p v-if="!editing">{{details.body}}</p>
             <footer class="blockquote-footer float-right">{{details.creatorEmail}}</footer>
           </blockquote>
+          <button
+            v-show="details.creatorEmail ==profile.email"
+            @click="editPost(p)"
+            class="btn btn-secondary btn-sm float-left"
+          >Edit Post</button>
         </div>
       </div>
     </div>
@@ -94,12 +103,20 @@ export default {
       if (windowMessage == true) {
         this.$store.dispatch("deletePost", this.$route.params.postId);
       }
+    },
+    editPost(post) {
+      this.editing = true;
+      this.PostToEdit = post;
+    },
+    editPostBody() {
+      this.$store.dispatch("editPostBody", this.details);
     }
   },
   data() {
     return {
       commentForm: false,
-      allowVote: true
+      allowVote: true,
+      editing: false
     };
   },
   computed: {
@@ -108,6 +125,9 @@ export default {
     },
     profile() {
       return this.$store.state.profile;
+    },
+    PostToEdit() {
+      return this.$store.state.activePost;
     }
   },
   components: {
