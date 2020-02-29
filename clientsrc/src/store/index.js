@@ -129,10 +129,5 @@ export default new Vuex.Store({
         console.error(error)
       }
     },
-    async deleteComment({ commit, dispatch }) {
-
-    }
-
-
   }
 });

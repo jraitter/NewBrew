@@ -88,7 +88,12 @@ export default {
       this.allowVote = false;
     },
     deletePost() {
-      this.$store.dispatch("deletePost", this.$route.params.postId);
+      let windowMessage = window.confirm(
+        "Are you sure you want to delete this post?"
+      );
+      if (windowMessage == true) {
+        this.$store.dispatch("deletePost", this.$route.params.postId);
+      }
     }
   },
   data() {
