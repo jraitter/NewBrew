@@ -1,15 +1,15 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-      <div class="card post" style="width: 100vw">
-        <div class="card-header">
-          <div class="row">
-            <div class="col-8 h3">{{details.title}}</div>
-            <div class="col-2">+{{details.upCount}}</div>
-            <div class="col-2">-{{details.downCount}}</div>
+      <div class="card post border border-dark m-1" style="width: 100vw">
+        <div class="card-header title-row">
+          <div class="row p-0 p-0">
+            <div class="col-8 h3 text-dark">{{details.title}}</div>
+            <div class="col-2 text-success">+{{details.upCount}}</div>
+            <div class="col-2 text-danger">-{{details.downCount}}</div>
           </div>
         </div>
-        <div class="card-body">
+        <div class="card-body border border-dark">
           <blockquote class="blockquote mb-0">
             <p>{{details.body}}</p>
             <footer class="blockquote-footer">{{details.creatorEmail}}</footer>
@@ -114,5 +114,8 @@ export default {
 .button-row {
   justify-content: center;
   min-width: 100%;
+}
+.title-row {
+  background-color: rgba(240, 154, 25, 0.521);
 }
 </style>

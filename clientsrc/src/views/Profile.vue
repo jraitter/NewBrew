@@ -12,7 +12,7 @@
           v-if="!postForm"
           @click="postForm = true"
           type="button"
-          class="btn btn-block btn-secondary"
+          class="btn btn-block btn-warning"
         >Create New Post</button>
         <button
           v-if="postForm"
