@@ -6,8 +6,8 @@ const Post = new Schema(
     title: { type: String, required: true },
     body: { type: String, required: true },
     creatorEmail: { type: String, required: true },
-    upCount: { type: Number },
-    downCount: { type: Number },
+    upCount: { type: Number, default: 0 },
+    downCount: { type: Number, default: 0 },
     comments: [{ type: String }]
   },
   { timestamps: true, toJSON: { virtuals: true } }
