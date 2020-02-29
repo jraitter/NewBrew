@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import Axios from "axios";
 import router from "../router";
+import { STATES } from "mongoose";
 
 Vue.use(Vuex);
 
@@ -17,15 +18,39 @@ let api = Axios.create({
 
 export default new Vuex.Store({
   state: {
-    profile: {}
+    profile: {},
+    posts: [],
+    activePost: {},
+    comments: []
   },
   mutations: {
     setProfile(state, profile) {
       state.profile = profile;
+    },
+    setPosts(state, posts) {
+      state.posts = posts;
+    },
+    setActivePost(state, post) {
+      state.activePost = post;
+    },
+    setComments(state, comments) {
+      state.comments = comments;
+    },
+    deletePost(state, id) {
+      state.posts = state.posts.filter(p => p._id != id)
+    },
+    addPost(state, post) {
+      state.posts.push(post);
+    },
+    addComment(state, comment) {
+      state.comments.push(comment)
+    },
+    deleteComment(state, id) {
+      state.comments = state.comments.filter(c => c._id != id)
     }
   },
   actions: {
-    setBearer({}, bearer) {
+    setBearer({ }, bearer) {
       api.defaults.headers.authorization = bearer;
     },
     resetBearer() {
@@ -33,11 +58,41 @@ export default new Vuex.Store({
     },
     async getProfile({ commit }) {
       try {
-        let res = await api.get("profile");
+        let res = await api.get("profiles");
         commit("setProfile", res.data);
       } catch (error) {
         console.error(error);
       }
+    },
+    async getCommentsByPostId({ commit, dispatch }) {
+
+    },
+    async getPostsByCreatorEmail({ commit, dispatch }, email) {
+      try {
+        let res = await api.get("posts/email/" + email);
+        commit("setPosts", res.data);
+      } catch (e) {
+        console.error(e)
+      }
+    },
+    async getAllPosts({ commit, dispatch }) {
+      try {
+        let res = await api.get("posts");
+        commit("setPosts", res.data)
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    async editPostBody({ commit, dispatch }) {
+
+    },
+    async deletePost({ commit, dispatch }) {
+
+    },
+    async deleteComment({ commit, dispatch }) {
+
     }
+
+
   }
 });

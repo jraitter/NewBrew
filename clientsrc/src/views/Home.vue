@@ -1,7 +1,9 @@
 <template>
   <div class="home container-fluid">
     <div class="row align-content-center">
-      <img class="col" alt="Vue logo" src="../assets/logo.png" />
+      <div class="col-md-3"></div>
+      <img class="col-xs-12 col-md-6" alt="Vue logo" src="../assets/logo.png" />
+      <div class="col-md-3"></div>
     </div>
     <div class="row text-center">
       <div class="col-12">
@@ -21,6 +23,12 @@ export default {
   name: "home",
   components: {
     posts
+  },
+  computed: {
+    posts() {
+      let data = this.$store.state.posts;
+      return data;
+    }
   }
 };
 </script>

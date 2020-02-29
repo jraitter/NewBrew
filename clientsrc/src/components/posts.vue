@@ -9,7 +9,7 @@ import post from "@/components/post";
 export default {
   name: "posts",
   mounted() {
-    this.$store.dispatch("getPosts");
+    this.$store.dispatch("getAllPosts");
   },
   computed: {
     posts() {

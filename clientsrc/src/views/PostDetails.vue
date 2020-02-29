@@ -50,7 +50,7 @@ import createComment from "@/components/createComment";
 import comments from "@/components/comments";
 
 export default {
-  name: "postDetails",
+  name: "PostDetails",
   data() {
     return {
       commentForm: false

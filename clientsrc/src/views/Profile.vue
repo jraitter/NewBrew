@@ -6,7 +6,8 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-12 m-0 p-1">
+      <div class="col-md-3"></div>
+      <div class="col-xs-12 col-md-6 m-0 p-1">
         <button
           v-if="!postForm"
           @click="postForm = true"
@@ -20,6 +21,7 @@
           class="btn btn-block btn-danger"
         >Ditch Post</button>
       </div>
+      <div class="col-md-3"></div>
     </div>
     <div class="row">
       <create-post v-if="postForm" />
@@ -44,7 +46,7 @@ export default {
       return this.$store.state.profile;
     },
     posts() {
-      return this.$store.dispatch("getPostsByCreatorEmail");
+      return this.$store.dispatch("getPostsByCreatorEmail", this.profile.email);
     }
   },
   data() {
