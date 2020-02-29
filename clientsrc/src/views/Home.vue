@@ -8,8 +8,13 @@
     <div class="row text-center">
       <div class="col-12">
         <h1 class="title">
-          <u>NewBrew</u>
+          <u>Welcome to NewBrew</u>
         </h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 text-center">
+        <h2 class="text-warning">Posts:</h2>
       </div>
     </div>
     <posts />

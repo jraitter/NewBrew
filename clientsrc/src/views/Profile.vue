@@ -2,12 +2,12 @@
   <div class="container-fluid text-center">
     <div class="row">
       <div class="col-12">
-        <h1>Welcome {{ profile.name }}</h1>
+        <h2>Welcome {{ profile.name }}</h2>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-3"></div>
-      <div class="col-xs-12 col-md-6 m-0 p-1">
+      <div class="col-3"></div>
+      <div class="col-6 m-0 p-1">
         <button
           v-if="!postForm"
           @click="postForm = true"
@@ -21,7 +21,7 @@
           class="btn btn-block btn-danger"
         >Ditch Post</button>
       </div>
-      <div class="col-md-3"></div>
+      <div class="col-3"></div>
     </div>
     <div class="row">
       <create-post v-if="postForm" />
