@@ -21,7 +21,7 @@
           <button
             v-show="details.creatorEmail ==profile.email"
             @click="editPost(p)"
-            class="btn btn-secondary btn-sm float-left"
+            class="btn btn-sm text-dark float-left"
           >Edit Post</button>
         </div>
       </div>

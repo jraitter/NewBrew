@@ -133,5 +133,13 @@ export default new Vuex.Store({
         console.error(error)
       }
     },
+    async deleteComment({ commit }, id) {
+      try {
+        let res = await api.delete("comments/" + id);
+        commit("deleteComment", id)
+      } catch (error) {
+        console.error(error)
+      }
+    }
   }
 });
